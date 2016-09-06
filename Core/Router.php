@@ -11,7 +11,7 @@ class Router
     const CONTROLLERS_PATH = '../App/Controllers';
 
     public function __construct(){
-        $routes = parse_ini_file("../config/routes.ini");
+        $routes = parse_ini_file(CONFIG_PATH."/routes.ini");
         foreach($routes as $key=>$value){
             $this->add($key, $value);
         }
