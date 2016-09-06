@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Origins Framework</title>
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Raleway:400,500,100,200,300,600,700,800,900);
+        html, body {
+            height: 100%;
+            font-family: 'Raleway', sans-serif;
+            background-color: #FFF5F2;
+        }
+
+        ::-moz-selection {
+            background-color: #FFBE0C;
+            color: #FFF5F2;
+        }
+
+        ::selection {
+            background-color: #FFBE0C;
+            color: #FFF5F2;
+        }
+
+        .center {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            height: 100%;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+        .center h1, .center h2 {
+            text-transform: uppercase;
+            margin: 0;
+        }
+        .center h2 {
+            letter-spacing: .4em;
+            padding: .4em .7em;
+            background-color: #141115;
+            color: #FFBE0C;
+        }
+        .center h1 {
+            color: #141115;
+            font-size: 3.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class='center'>
+        <h2>{{ welcome }}</h2>
+        <h1>{{ origins }}</h1>
+    </div>
+</body>
+</html>
