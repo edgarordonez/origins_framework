@@ -15,7 +15,6 @@ if(!isset($_SESSION)){
 
 define("PROJECT_PATH", dirname(__DIR__));
 define("APP_PATH", PROJECT_PATH . '/App');
-define("CONFIG_PATH", PROJECT_PATH . '/Config');
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

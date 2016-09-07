@@ -11,8 +11,8 @@ class Router
     const CONTROLLERS_PATH = '../App/Controllers';
 
     public function __construct(){
-        $routes = parse_ini_file(CONFIG_PATH."/routes.ini");
-        foreach($routes as $key=>$value){
+        $routes = parse_ini_file(PROJECT_PATH."/Config/routes.ini");
+        foreach($routes as $key => $value){
             $this->add($key, $value);
         }
     }
@@ -41,7 +41,7 @@ class Router
                 exit;
             }
         }
-        include_once APP_PATH . "/Views/error/404.php";
+        include_once APP_PATH . "/Views/error/404.html";
         exit;
     }
 
