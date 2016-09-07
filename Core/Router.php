@@ -10,7 +10,14 @@ class Router
     const NAMESPACE_CONTROLLERS = '\App\Controllers\\';
     const CONTROLLERS_PATH = '../App/Controllers';
 
-    public function add($url, $controller)
+    public function __construct(){
+        $routes = parse_ini_file(CONFIG_PATH."/routes.ini");
+        foreach($routes as $key=>$value){
+            $this->add($key, $value);
+        }
+    }
+
+    private function add($url, $controller)
     {
         $url = trim($url, $this->trim);
         $this->listUrl[] = $url;
