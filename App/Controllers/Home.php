@@ -1,16 +1,12 @@
 <?php
 namespace App\Controllers;
 
-use Core\App;
+use Core\Controller;
 
-class Home
+class Home extends Controller
 {
-    public function __construct()
+    public function index($name = null)
     {
-    }
-
-    public function index()
-    {
-        App::$twig->display('index.html', array('welcome' => 'Welcome to', 'origins' => 'origins framework'));
+        $this->display("index.html.twig", array("title" => "Origins Framework", "hello" => "Welcome $name to", "origins" => "origins framework"));
     }
 }

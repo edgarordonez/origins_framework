@@ -14,12 +14,6 @@ class App
     public function bootstrap($twig)
     {
         self::$twig = $twig;
-
-        /**
-         * TODO: Change method $router->add() to config/routes.ini
-         */
-        $this->router->add('/', 'Home::index');
-
         $this->router->render();
     }
 }
