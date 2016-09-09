@@ -6,7 +6,7 @@ class ORM
     protected static $table;
     private static $connection;
 
-    function __construct()
+    public function __construct()
     {
         self::$connection = Database::instance();
     }
@@ -20,8 +20,8 @@ class ORM
     public static function where($field, $value)
     {
         $objects = null;
-        $statement = self::$connection->prepare("SELECT * FROM " . static::$table . " WHERE " . $field . " = :value");
-        $results = $statement->execute([$value]);
+        $results = self::$connection->prepare("SELECT * FROM " . static::$table . " WHERE " . $field . " = " . $value);
+        $results->execute();
 
         if ($results) {
             $class = get_called_class();
@@ -36,8 +36,8 @@ class ORM
     public static function all()
     {
         $objects = null;
-        $statement = self::$connection->prepare("SELECT * FROM " . static::$table);
-        $results = $statement->execute();
+        $results = self::$connection->prepare("SELECT * FROM " . static::$table);
+        $results->execute();
 
         if ($results) {
             $class = get_called_class();
@@ -48,7 +48,7 @@ class ORM
         return $objects;
     }
 
-    private function save()
+    public function save()
     {
         $columns = $this->columnsObject($this);
 
@@ -62,8 +62,8 @@ class ORM
             $query = "INSERT INTO " . static::$table . " ($columns) VALUES ($params)";
         }
 
-        $statement = self::$connection->prepare($query);
-        $result = $statement->execute();
+        $result = self::$connection->prepare($query);
+        $result->execute();
 
         if ($result) {
             $result = array('error' => false, 'message' => self::$connection->lastInserId());
@@ -74,7 +74,7 @@ class ORM
         return $result;
     }
 
-    private function columnsObject($this)
+    private function columnsObject()
     {
         $filtered = null;
         $values = get_object_vars($this);
