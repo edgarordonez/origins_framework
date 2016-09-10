@@ -11,7 +11,6 @@ class Users extends ORM
     public $age;
     public $city;
 
-
     public function __construct($object = null)
     {
         parent::__construct();
@@ -33,6 +32,11 @@ class Users extends ORM
     public function getUser($id)
     {
         return parent::find($id);
+    }
+
+    public function exits($name)
+    {
+        return parent::where('name', $name) != null;
     }
 
     public function save()

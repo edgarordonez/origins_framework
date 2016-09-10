@@ -7,6 +7,10 @@ class Home extends Controller
 {
     public function index($name = null)
     {
-        $this->display("index.html.twig", array("title" => "Origins Framework", "hello" => "Welcome $name to", "origins" => "origins framework"));
+        $this->display("index.html.twig",
+        array(
+            "hello" => "Welcome $name to",
+            "origins" => "origins framework"
+        ));
     }
 }

@@ -1,11 +1,8 @@
 {% extends "viewsTemplate/base.html.twig" %}
-
+{% block title %}Home{% endblock %}
 {% block content %}
     <div class='center'>
         <h2>{{ hello }}</h2>
         <h1>{{ origins }}</h1>
     </div>
-{% endblock %}
-{% block js %}
-parent()
 {% endblock %}

@@ -1,6 +1,8 @@
 <?php
 namespace Core;
 
+use \App\Controllers\Errors\Error_404 as Error_404;
+
 class Router
 {
     private $listUrl = array();
@@ -41,7 +43,8 @@ class Router
                 exit;
             }
         }
-        include_once APP_PATH . "/Views/error/404.html";
+        $error = new Error_404;
+        call_user_func_array([$error, "index"], array());
         exit;
     }
 
