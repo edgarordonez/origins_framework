@@ -10,7 +10,7 @@ function cambiar_login() {
     },200);
 }
 
-function cambiar_sign_up(at) {
+function cambiar_sign_up() {
     document.querySelector('.cont_forms').className = "cont_forms cont_forms_active_sign_up";
     document.querySelector('.cont_form_sign_up').style.display = "block";
     document.querySelector('.cont_form_login').style.opacity = "0";

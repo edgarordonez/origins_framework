@@ -34,8 +34,7 @@ class Database
 
     public static function instance()
     {
-        if (!isset(self::$instance))
-        {
+        if (!isset(self::$instance)) {
             $class = __CLASS__;
             self::$instance = new $class;
         }

@@ -9,7 +9,7 @@ assert_options(ASSERT_ACTIVE, true);
 assert_options(ASSERT_BAIL, true);
 assert_options(ASSERT_WARNING, true);
 
-if(!isset($_SESSION)){
+if(!isset($_SESSION)) {
     session_start();
 }
 

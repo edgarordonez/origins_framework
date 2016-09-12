@@ -11,13 +11,13 @@ class ORM
         self::$connection = Database::instance();
     }
 
-    public static function find($id)
+    protected static function find($id)
     {
         $result = self::where('id', $id);
         return $result[0];
     }
 
-    public static function where($field, $value)
+    protected static function where($field, $value)
     {
         $objects = null;
         $results = self::$connection->prepare("SELECT * FROM " . static::$table . " WHERE " . $field . " = :value");
@@ -25,15 +25,15 @@ class ORM
 
         if ($results) {
             $class = get_called_class();
-            foreach ($results as $index => $obj)
-            {
+            foreach ($results as $index => $obj) {
                 $objects[] = new $class($obj);
             }
         }
+
         return $objects;
     }
 
-    public static function all()
+    protected static function all()
     {
         $objects = null;
         $results = self::$connection->prepare("SELECT * FROM " . static::$table);
@@ -48,7 +48,7 @@ class ORM
         return $objects;
     }
 
-    public function save()
+    protected function save()
     {
         $nameColumns = $this->columnsObject($this);
         $valueColumns = $this->valuesObject($this);
@@ -61,25 +61,24 @@ class ORM
             $columns = join(", ", $nameColumns);
             $query = "INSERT INTO " . static::$table . " ($columns) VALUES ($params)";
         }
-
         $result = self::$connection->prepare($query);
         $result->execute($valueColumns);
     }
 
-    private function columnsObject()
+    private function columnsObject($object)
     {
-        return array_keys($this->dataObject());
+        return array_keys($this->dataObject($object));
     }
 
-    private function valuesObject()
+    private function valuesObject($object)
     {
-        return array_values($this->dataObject());
+        return array_values($this->dataObject($object));
     }
 
-    private function dataObject()
+    private function dataObject($object)
     {
         $filtered = null;
-        $values = get_object_vars($this);
+        $values = get_object_vars($object);
 
         foreach ($values as $key => $value) {
             if ($value !== null && $value !== '' && strpos($key, 'obj_') === false && $key !== 'id') {

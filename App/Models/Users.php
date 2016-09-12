@@ -8,17 +8,15 @@ class Users extends ORM
     protected static $table = 'users';
     public $id;
     public $name;
-    public $age;
-    public $city;
+    public $email;
+    public $password;
 
     public function __construct($object = null)
     {
         parent::__construct();
 
-        if($object != null)
-        {
-            foreach ($object as $key => $value)
-            {
+        if($object != null) {
+            foreach ($object as $key => $value) {
                 $this->$key = $value;
             }
         }
@@ -26,21 +24,31 @@ class Users extends ORM
 
     public function getAll()
     {
-        return parent::all();
+        return $this->all();
     }
 
     public function getUser($id)
     {
-        return parent::find($id);
+        return $this->find($id);
     }
 
-    public function exits($name)
+    public function valid($user)
     {
-        return parent::where('name', $name) != null;
+        $userExist = $this->where('email', $user->email);
+
+        if($userExist) {
+            return password_verify($user->password, $userExist[0]->password);
+        }
     }
 
-    public function save()
+    public function exits($email)
     {
-        return parent::save($this);
+        return $this->where('email', $email) != null;
+    }
+
+    public function register()
+    {
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        return $this->save($this);
     }
 }

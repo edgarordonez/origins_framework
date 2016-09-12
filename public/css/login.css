@@ -19,15 +19,27 @@
 
 }
 
-
 .cont_centrar {
-    position: relative;
-    float: left;
-    width: 100%;
+    display: flex;
+    height: 100%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
 }
 
 .cont_login {
     position: relative;
+    height: 50%;
     width: 640px;
     left: 50%;
     margin-left: -320px;
@@ -158,13 +170,13 @@
 }
 
 .btn_login {
-    background-color: #26C6DA;
-    border: none;
+    background-color: #b9c6cc;
+    border: 1px solid;
     padding: 10px;
     width: 200px;
-    border-radius:3px;
+    border-radius: 3px;
     box-shadow: 1px 5px 20px -5px rgba(0,0,0,0.4);
-    color: #fff;
+    color: #FFFFFF;
     margin-top: 10px;
     cursor: pointer;
 }
@@ -181,6 +193,7 @@
 }
 
 .cont_ba_opcitiy > p {
+    height: 70px;
     font-weight: 400;
     margin-top: 15px;
     color: #fff;
@@ -199,13 +212,13 @@ background text
 }
 
 .btn_sign_up {
-    background-color: #ef5350;
-    border: none;
+    background-color: #b9c6cc;
+    border: 1px solid;
     padding: 10px;
     width: 200px;
-    border-radius:3px;
+    border-radius: 3px;
     box-shadow: 1px 5px 20px -5px rgba(0,0,0,0.4);
-    color: #fff;
+    color: #FFFFFF;
     margin-top: 10px;
     cursor: pointer;
 }
