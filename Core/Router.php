@@ -1,6 +1,8 @@
 <?php
 namespace Core;
 
+use \App\Controllers\Error\Error_404 as Error_404;
+
 class Router
 {
     private $listUrl = array();
@@ -10,9 +12,10 @@ class Router
     const NAMESPACE_CONTROLLERS = '\App\Controllers\\';
     const CONTROLLERS_PATH = '../App/Controllers';
 
-    public function __construct(){
+    public function __construct()
+    {
         $routes = parse_ini_file(PROJECT_PATH."/Config/routes.ini");
-        foreach($routes as $key => $value){
+        foreach($routes as $key => $value) {
             $this->add($key, $value);
         }
     }
@@ -30,8 +33,7 @@ class Router
 
         foreach ($this->listUrl as $key => $urlInList)
         {
-            if (preg_match("#^$urlInList$#", $url))
-            {
+            if (preg_match("#^$urlInList$#", $url)) {
                 $action = explode("::", $this->listMethod[$key]);
                 $parameters = $this->parseParameters($url, $urlInList);
 
@@ -41,7 +43,8 @@ class Router
                 exit;
             }
         }
-        include_once APP_PATH . "/Views/error/404.html";
+        $error = new Error_404;
+        call_user_func_array([$error, "index"], array());
         exit;
     }
 
@@ -57,10 +60,8 @@ class Router
         $browserUrl = explode('/', $url);
         $userUrl = explode('/', $urlInList);
 
-        foreach ($userUrl as $key => $value)
-        {
-            if($value === '.+')
-            {
+        foreach ($userUrl as $key => $value) {
+            if($value === '.+') {
                 $parameters[] = $browserUrl[$key];
             }
         }

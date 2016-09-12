@@ -9,11 +9,12 @@ html {
 }
 
 body {
-    background: url(http://i.imgur.com/76NZB7A.gif) no-repeat center center fixed;
+    background: url('../img/iorigins.gif') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Raleway', sans-serif;
     background-color: #342643;
     height: 100%;
+    overflow: hidden;
 }
 
 .text-wrapper {
@@ -40,13 +41,13 @@ body {
 .title {
     font-size: 6em;
     font-weight: 700;
-    color: #EE4B5E;
+    color: #FFFFFF;
 }
 
 .subtitle {
     font-size: 40px;
     font-weight: 700;
-    color: #1FA9D6;
+    color: #607D8B;
 }
 
 .buttons {
@@ -54,18 +55,18 @@ body {
 }
 .buttons a.button {
     font-weight: 700;
-    border: 2px solid #EE4B5E;
+    border: 2px solid #FFFFFF;
     text-decoration: none;
     padding: 15px;
     text-transform: uppercase;
-    color: #EE4B5E;
+    color: #FFFFFF;
     border-radius: 26px;
     -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
 }
 .buttons a.button:hover {
-    background-color: #EE4B5E;
-    color: white;
+    background-color: #FFFFFF;
+    color: #000000;
     -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
 }

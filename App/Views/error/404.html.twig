@@ -1,0 +1,21 @@
+{% extends "./baseTemplate/base.html.twig" %}
+
+{% block css %}
+    <link rel="stylesheet" href="/css/404.css">
+{% endblock %}
+
+{% block content %}
+    <div class="text-wrapper">
+        <div class="title" data-content="404">
+            404
+        </div>
+
+        <div class="subtitle">
+            Oops, the page you're looking for doesn't exist.
+        </div>
+
+        <div class="buttons">
+            <a class="button" href="http://origins.local/">Go to homepage</a>
+        </div>
+    </div>
+{% endblock %}

@@ -25,11 +25,8 @@ class Users extends Controller
         assert($id != null);
 
         $users = $this->user->getUser($id);
-        foreach ($users as $index => $user)
-        {
-            echo '<pre>';
-            echo json_encode($user, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-            echo '</pre>';
-        }
+        echo '<pre>';
+        echo json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        echo '</pre>';
     }
 }

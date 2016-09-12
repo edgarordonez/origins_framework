@@ -1,0 +1,70 @@
+{% extends "baseTemplate/base.html.twig" %}
+{% block title %}Login{% endblock %}
+{% block css %}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/css/login.css">
+{% endblock %}
+
+{% block content %}
+    <div class="cotn_principal">
+        <div class="cont_centrar">
+
+            <div class="cont_login">
+                <div class="cont_info_log_sign_up">
+                    <div class="col_md_login">
+                        <div class="cont_ba_opcitiy">
+                            <h2>LOGIN</h2>
+                            <p>Cada persona que vive en este planeta tiene un par de ojos únicos, cada uno con su propio universo.</p>
+                            <button class="btn_login" onclick="cambiar_login()">LOGIN</button>
+                        </div>
+                    </div>
+                    <div class="col_md_sign_up">
+                        <div class="cont_ba_opcitiy">
+                            <h2>SIGN UP</h2>
+                            <p>¿Cual es tu flor favorita? -El diente de león. -¿Por qué? -Porque son libres, son silvestres y no se pueden comprar</p>
+                            <button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN UP</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="cont_back_info">
+                    <div class="cont_img_back_grey">
+                        <img src="http://3.bp.blogspot.com/-VJ9rbmLeM2g/VWpTmJ1OD5I/AAAAAAAAACI/l7YwshDm_Zo/s1600/maxresdefault.jpg" alt="" />
+                    </div>
+
+                </div>
+                <div class="cont_forms" >
+                    <div class="cont_img_back_">
+                        <img src="http://3.bp.blogspot.com/-VJ9rbmLeM2g/VWpTmJ1OD5I/AAAAAAAAACI/l7YwshDm_Zo/s1600/maxresdefault.jpg" alt="" />
+                    </div>
+                    <div class="cont_form_login">
+                        <a href="#" onclick="ocultar_login_sign_up()" ><i class="material-icons">&#xE5C4;</i></a>
+                        <h2>LOGIN</h2>
+                        <form action="login/auth" method="post">
+                            <input name="email" type="email" placeholder="Your email" required/>
+                            <input name="password" type="password" placeholder="Your password" required/>
+                            <button class="btn_login" onclick="cambiar_login()">LOGIN</button>
+                        </form>
+                    </div>
+
+                    <div class="cont_form_sign_up">
+                        <a href="#" onclick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
+                        <h2>SIGN UP</h2>
+                        <form method="post" action="login/register">
+                            <input name="name" type="text" placeholder="Your name" required/>
+                            <input name="email" type="email" placeholder="Your email" required/>
+                            <input name="password" type="password" placeholder="Your password" required/>
+                            <button class="btn_sign_up" onclick="cambiar_sign_up()">SIGN UP</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="./js/login.js"></script>
+{% endblock %}

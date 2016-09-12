@@ -1,11 +1,20 @@
-{% extends "viewsTemplate/base.html.twig" %}
-
+{% extends "baseTemplate/base.html.twig" %}
+{% block title %}Home{% endblock %}
 {% block content %}
     <div class='center'>
         <h2>{{ hello }}</h2>
         <h1>{{ origins }}</h1>
+        <div class="demo">
+            <button class="login btn_blue">DEMO APP</button>
+        </div>
     </div>
 {% endblock %}
 {% block js %}
-parent()
+    <script>
+        document.querySelector('.login').addEventListener("click", (e) => login());
+
+        function login() {
+            location.replace("/login");
+        }
+    </script>
 {% endblock %}
