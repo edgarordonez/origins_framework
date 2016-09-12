@@ -9,6 +9,11 @@ class Users extends Controller
 
     public function __construct()
     {
+        if(!isset($_SESSION['email'])) {
+            echo 'Acces denied';
+            exit;
+        } //TODO: Middleware session.
+
         $this->user = new \App\Models\Users();
     }
 

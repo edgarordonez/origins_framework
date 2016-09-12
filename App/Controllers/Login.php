@@ -15,15 +15,16 @@ class Login extends Controller
 
     public function auth()
     {
-        if(!isset($_POST['email']))
-        {
+        if(!isset($_POST['email'])) {
             $error = new Error_404;
             call_user_func_array([$error, "index"], array());
             exit;
         }
+
         $user = new Users((object)$_POST);
 
         if($user->valid($user)) {
+            $_SESSION['email'] = $user->email;
             $this->redirect('/users');
         } else {
             $this->redirect('/login');
