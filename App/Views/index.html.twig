@@ -4,5 +4,15 @@
     <div class='center'>
         <h2>{{ hello }}</h2>
         <h1>{{ origins }}</h1>
+        <div class="demo">
+            <button onclick="login()" class="login btn_blue">DEMO APP</button>
+        </div>
     </div>
+{% endblock %}
+{% block js %}
+    <script>
+        function login() {
+            location.replace("/login");
+        }
+    </script>
 {% endblock %}

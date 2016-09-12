@@ -1,23 +1,13 @@
-/* Index*/
 @import url(http://fonts.googleapis.com/css?family=Raleway:400,500,100,200,300,600,700,800,900);
+@import url(https://fonts.googleapis.com/css?family=Patrick+Hand+SC);
 html, body {
     height: 100%;
     font-family: 'Raleway', sans-serif;
-    background-color: #FFF5F2;
-    overflow: hidden;
-}
-
-::-moz-selection {
-    background-color: #FFBE0C;
-    color: #FFF5F2;
-}
-
-::selection {
-    background-color: #FFBE0C;
-    color: #FFF5F2;
+    background-color: #000000;
 }
 
 .center {
+    cursor: default;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -44,10 +34,29 @@ html, body {
 .center h2 {
     letter-spacing: .4em;
     padding: .4em .7em;
-    background-color: #141115;
-    color: #FFBE0C;
+    color: #000000;
+    background-color: #FFFFFF;
 }
 .center h1 {
-    color: #141115;
+    color: #FFFFFF;
     font-size: 3.2em;
+}
+.center .demo button {
+    font-family: 'Open Sans', sans-serif;
+    background-color: transparent;
+    border: 1px solid;
+    padding: 10px;
+    width: 200px;
+    border-radius: 3px;
+    box-shadow: 1px 5px 20px -5px rgba(0,0,0,0.4);
+    color: #FFFFFF;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.center .demo > .btn_blue {
+    border-color: rgba(66, 143, 190, 0.8);
+}
+.center .demo > .btn_blue:hover {
+    background-color: rgba(66, 143, 190, 0.2);
+    transition: 1s all ease;
 }
