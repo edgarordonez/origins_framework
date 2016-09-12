@@ -24,7 +24,7 @@ class Login extends Controller
         $user = new Users((object)$_POST);
 
         if($user->valid($user)) {
-            $_SESSION['email'] = $user->email;
+            $this->userSession($user);
             $this->redirect('/users');
         } else {
             $this->redirect('/login');
@@ -41,10 +41,16 @@ class Login extends Controller
 
         $user = new Users((object)$_POST);
         if(!$user->exits($user->email)) {
+            $this->userSession($user);
             $user->register();
             $this->redirect('/users');
         } else {
             $this->redirect('/login');
         }
+    }
+
+    private function userSession($user)
+    {
+        $_SESSION['email'] = $user->email;
     }
 }
