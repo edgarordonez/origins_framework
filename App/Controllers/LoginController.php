@@ -1,13 +1,11 @@
 <?php
 namespace App\Controllers;
 
-use App\Controllers\Error\Error_404;
-use App\Models\Users;
+use App\Models\User;
 use Core\Controller;
 
-class Login extends Controller
+class LoginController extends Controller
 {
-
     public function index()
     {
         $this->display("login.html.twig", []);
@@ -15,13 +13,7 @@ class Login extends Controller
 
     public function auth()
     {
-        if(!isset($_POST['email'])) {
-            $error = new Error_404;
-            call_user_func_array([$error, "index"], array());
-            exit;
-        }
-
-        $user = new Users((object)$_POST);
+        $user = new User((object)$_POST);
 
         if($user->valid($user)) {
             $this->userSession($user);
@@ -33,13 +25,8 @@ class Login extends Controller
 
     public function register()
     {
-        if(!isset($_POST['email'])) {
-            $error = new Error_404;
-            call_user_func_array([$error, "index"], array());
-            exit;
-        }
+        $user = new User((object)$_POST);
 
-        $user = new Users((object)$_POST);
         if(!$user->exits($user->email)) {
             $this->userSession($user);
             $user->register();

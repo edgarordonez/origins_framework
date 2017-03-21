@@ -1,15 +1,11 @@
 <?php
+
 namespace Core;
 
-class ORM
+abstract class ORM
 {
+    public $id;
     protected static $table;
-    private static $connection;
-
-    public function __construct()
-    {
-        self::$connection = Database::instance();
-    }
 
     protected static function find($id)
     {
@@ -20,7 +16,7 @@ class ORM
     protected static function where($field, $value)
     {
         $objects = null;
-        $results = self::$connection->prepare("SELECT * FROM " . static::$table . " WHERE " . $field . " = :value");
+        $results = Database::instance()->prepare('SELECT * FROM ' . static::$table . ' WHERE ' . $field . ' = :value');
         $results->execute(array(':value' => $value));
 
         if ($results) {
@@ -36,7 +32,7 @@ class ORM
     protected static function all()
     {
         $objects = null;
-        $results = self::$connection->prepare("SELECT * FROM " . static::$table);
+        $results = Database::instance()->prepare('SELECT * FROM ' . static::$table);
         $results->execute();
 
         if ($results) {
@@ -53,15 +49,15 @@ class ORM
         $nameColumns = $this->columnsObject($this);
         $valueColumns = $this->valuesObject($this);
 
-        if ($this->id) {
-            $columns = join(" = ?, ", $nameColumns).' = ?';
-            $query = "UPDATE " . static::$table . " SET $columns WHERE id = " . $this->id;
+        if (!empty($this->id)) {
+            $columns = join(' = ?, ', $nameColumns) . ' = ?';
+            $query = 'UPDATE ' . static::$table . ' SET ' . $columns . ' WHERE id = ' . $this->id;
         } else {
-            $params = join(", ", array_fill(0, count($nameColumns), "?"));
-            $columns = join(", ", $nameColumns);
-            $query = "INSERT INTO " . static::$table . " ($columns) VALUES ($params)";
+            $params = join(', ', array_fill(0, count($nameColumns), '?'));
+            $columns = join(', ', $nameColumns);
+            $query = 'INSERT INTO ' . static::$table . ' ( ' . $columns . ' ) VALUES ( ' . $params . ')';
         }
-        $result = self::$connection->prepare($query);
+        $result = Database::instance()->prepare($query);
         $result->execute($valueColumns);
     }
 

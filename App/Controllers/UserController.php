@@ -2,8 +2,9 @@
 namespace App\Controllers;
 
 use Core\Controller;
+use App\Models\User;
 
-class Users extends Controller
+class UserController extends Controller
 {
     private $user;
 
@@ -12,9 +13,9 @@ class Users extends Controller
         if(!isset($_SESSION['email'])) {
             echo 'Acces denied';
             exit;
-        } //TODO: Middleware session.
+        }
 
-        $this->user = new \App\Models\Users();
+        $this->user = new User();
     }
 
     public function getAll()
@@ -27,9 +28,8 @@ class Users extends Controller
 
    public function getUser($id)
     {
-        assert($id != null);
-
         $users = $this->user->getUser($id);
+
         echo '<pre>';
         echo json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         echo '</pre>';

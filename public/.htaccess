@@ -1,8 +1,11 @@
-Options -Multiviews
+DirectoryIndex index.php
 
-RewriteEngine On
+<IfModule mod_rewrite.c>
+    RewriteEngine On
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
+    RewriteRule ^(.*) - [E=BASE:%1]
 
-RewriteRule ^(.+)$ index.php?url=$1 [QSA]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule .? - [L]
+</IfModule>

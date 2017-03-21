@@ -1,20 +1,19 @@
 <?php
+
 namespace App\Models;
 
 use Core\ORM;
 
-class Users extends ORM
+class User extends ORM
 {
-    protected static $table = 'users';
     public $id;
     public $name;
     public $email;
     public $password;
+    protected static $table = 'Users';
 
     public function __construct($object = null)
     {
-        parent::__construct();
-
         if($object != null) {
             foreach ($object as $key => $value) {
                 $this->$key = $value;
@@ -34,11 +33,13 @@ class Users extends ORM
 
     public function valid($user)
     {
-        $userExist = $this->where('email', $user->email);
+        $userExist = $this->exits($user->email);
 
-        if($userExist) {
-            return password_verify($user->password, $userExist[0]->password);
+        if(!$userExist) {
+            return false;
         }
+
+        return password_verify($user->password, $userExist[0]->password);
     }
 
     public function exits($email)
@@ -49,6 +50,6 @@ class Users extends ORM
     public function register()
     {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
-        return $this->save($this);
+        $this->save();
     }
 }
