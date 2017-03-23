@@ -1,26 +1,22 @@
 <?php
+
 namespace Core;
 
-class ORM
+abstract class Origins
 {
+    public $id;
     protected static $table;
-    private static $connection;
 
-    public function __construct()
-    {
-        self::$connection = Database::instance();
-    }
-
-    protected static function find($id)
+    public function find($id)
     {
         $result = self::where('id', $id);
         return $result[0];
     }
 
-    protected static function where($field, $value)
+    public function where($field, $value)
     {
         $objects = null;
-        $results = self::$connection->prepare("SELECT * FROM " . static::$table . " WHERE " . $field . " = :value");
+        $results = Database::instance()->prepare('SELECT * FROM ' . static::$table . ' WHERE ' . $field . ' = :value');
         $results->execute(array(':value' => $value));
 
         if ($results) {
@@ -33,10 +29,10 @@ class ORM
         return $objects;
     }
 
-    protected static function all()
+    public function all()
     {
         $objects = null;
-        $results = self::$connection->prepare("SELECT * FROM " . static::$table);
+        $results = Database::instance()->prepare('SELECT * FROM ' . static::$table);
         $results->execute();
 
         if ($results) {
@@ -48,21 +44,48 @@ class ORM
         return $objects;
     }
 
-    protected function save()
+    public function save()
+    {
+        if (!empty($this->id)) {
+            $this->updateQuery();
+        } else {
+            $this->insertQuery();
+        }
+    }
+
+    protected function initObjectFromPost($object)
+    {
+        if ($object !== null) {
+            foreach ($object as $key => $value) {
+                $this->$key = $value;
+            }
+        }
+    }
+
+    private function updateQuery()
     {
         $nameColumns = $this->columnsObject($this);
         $valueColumns = $this->valuesObject($this);
 
-        if ($this->id) {
-            $columns = join(" = ?, ", $nameColumns).' = ?';
-            $query = "UPDATE " . static::$table . " SET $columns WHERE id = " . $this->id;
-        } else {
-            $params = join(", ", array_fill(0, count($nameColumns), "?"));
-            $columns = join(", ", $nameColumns);
-            $query = "INSERT INTO " . static::$table . " ($columns) VALUES ($params)";
-        }
-        $result = self::$connection->prepare($query);
+        $columns = join(' = ?, ', $nameColumns) . ' = ?';
+        $query = 'UPDATE ' . static::$table . ' SET ' . $columns . ' WHERE id = ' . $this->id;
+
+        $result = Database::instance()->prepare($query);
         $result->execute($valueColumns);
+    }
+
+    private function insertQuery()
+    {
+        $nameColumns = $this->columnsObject($this);
+        $valueColumns = $this->valuesObject($this);
+
+        $params = join(', ', array_fill(0, count($nameColumns), '?'));
+        $columns = join(', ', $nameColumns);
+        $query = 'INSERT INTO ' . static::$table . ' ( ' . $columns . ' ) VALUES ( ' . $params . ')';
+
+        $result = Database::instance()->prepare($query);
+        $result->execute($valueColumns);
+        $this->id = Database::instance()->lastInsertId();
     }
 
     private function columnsObject($object)
