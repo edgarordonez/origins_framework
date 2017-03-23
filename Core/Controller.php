@@ -22,6 +22,6 @@ abstract class Controller
 
     protected function redirect($route)
     {
-        header('Location: http://'. $_SERVER['HTTP_HOST'] . $route);
+        header('Location: http://' . $_SERVER['HTTP_HOST'] . $route);
     }
 }

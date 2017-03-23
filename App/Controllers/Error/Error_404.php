@@ -1,9 +1,10 @@
 <?php
+
 namespace App\Controllers\Error;
 
 use Core\Controller;
 
-class Error_404Controller extends Controller
+class Error_404 extends Controller
 {
     public function index()
     {

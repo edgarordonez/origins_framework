@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use \App\Controllers\Error\Error_404Controller;
+use \App\Controllers\Error\Error_404;
 
 class Router
 {
@@ -19,7 +19,7 @@ class Router
     {
         $this->routes = require_once '../Config/routes.php';
 
-        foreach($this->routes as $key => $value) {
+        foreach ($this->routes as $key => $value) {
             $this->add($value);
         }
     }
@@ -28,13 +28,12 @@ class Router
     {
         $url = $this->parseUrl();
 
-        foreach ($this->listUrl as $key => $urlInList)
-        {
-            if (($_SERVER['REQUEST_METHOD'] == $this->listRequest[$key]) && (preg_match('#^' . $urlInList . '$#', $url)) ) {
+        foreach ($this->listUrl as $key => $urlInList) {
+            if (($_SERVER['REQUEST_METHOD'] == $this->listRequest[$key]) && (preg_match('#^' . $urlInList . '$#', $url))) {
                 $action = explode('::', $this->listMethod[$key]);
                 $parameters = $this->parseParameters($url, $urlInList);
 
-                $class = self::NAMESPACE_CONTROLLERS.$action[0];
+                $class = self::NAMESPACE_CONTROLLERS . $action[0];
                 $controller = new $class;
 
                 call_user_func_array([$controller, $action[1]], $parameters);
@@ -42,7 +41,7 @@ class Router
             }
         }
 
-        $error = new Error_404Controller;
+        $error = new Error_404;
         call_user_func_array([$error, 'index'], array());
         http_response_code(404);
         exit;
@@ -70,7 +69,7 @@ class Router
         $userUrl = explode('/', $urlInList);
 
         foreach ($userUrl as $key => $value) {
-            if($value === '.+') {
+            if ($value === '.+') {
                 $parameters[] = $browserUrl[$key];
             }
         }

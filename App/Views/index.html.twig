@@ -11,10 +11,8 @@
 {% endblock %}
 {% block js %}
     <script>
-        document.querySelector('.login').addEventListener("click", (e) => login());
-
-        function login() {
-            location.replace("/login");
-        }
+        document.querySelector('.login').addEventListener("click", () => {
+            location.replace("/login")
+        })
     </script>
 {% endblock %}

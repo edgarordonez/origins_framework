@@ -9,8 +9,8 @@ class Database
 
     public function __construct()
     {
-        $configDb = parse_ini_file(PROJECT_PATH.'/Config/database.ini');
-        $dsn = 'mysql:host='. $configDb['host'].';dbname='.$configDb['database'].';charset=utf8';
+        $configDb = parse_ini_file(PROJECT_PATH . '/Config/database.ini');
+        $dsn = 'mysql:host=' . $configDb['host'] . ';dbname=' . $configDb['database'] . ';charset=utf8';
         $user = $configDb['user'];
         $password = $configDb['password'];
 
