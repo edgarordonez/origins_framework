@@ -24,4 +24,16 @@ abstract class Controller
     {
         header('Location: http://' . $_SERVER['HTTP_HOST'] . $route);
     }
+
+    protected function userNeedAuth()
+    {
+        if ($this->getAuthUser() === null) {
+            $this->redirect('/login');
+        }
+    }
+
+    protected function getAuthUser()
+    {
+        return isset($_SESSION['user']) ? unserialize($_SESSION['user']) : null;
+    }
 }

@@ -11,7 +11,7 @@ class AuthController extends Controller
 
     public function index()
     {
-        if (!empty($_SESSION['user'])) {
+        if ($this->getAuthUser() !== null) {
             $this->redirect($this->redirectTo);
         }
 
@@ -26,12 +26,12 @@ class AuthController extends Controller
             return false;
         }
 
-        return password_verify($this->user->password, $result[0]->password);
+        return password_verify($this->user->password, $result->password);
     }
 
     protected function exits()
     {
-        return $this->user->where('email', $this->user->email);
+        return $this->user->where('email', $this->user->email)[0];
     }
 
     protected function create()
@@ -42,7 +42,7 @@ class AuthController extends Controller
 
     protected function logged()
     {
-        $this->user = (object)$this->exits();
-        $_SESSION['user'] = $this->user;
+        $this->user = $this->exits();
+        $_SESSION['user'] = serialize($this->user);
     }
 }

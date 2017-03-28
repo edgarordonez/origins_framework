@@ -6,12 +6,19 @@ use Core\Controller;
 
 class HomeController extends Controller
 {
-    public function index($name = null)
+    public function __construct()
     {
-        $this->display("index.html.twig",
-            array(
-                "hello" => "Welcome $name to",
-                "origins" => "origins framework"
-            ));
+        parent::__construct();
+        $this->userNeedAuth();
+    }
+
+    public function index()
+    {
+        $user = $this->getAuthUser();
+
+        $this->display("index.html.twig", [
+            "hello" => "Welcome $user->name to",
+            "origins" => "origins framework"
+        ]);
     }
 }
