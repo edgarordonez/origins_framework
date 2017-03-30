@@ -1,0 +1,56 @@
+{% extends "/baseTemplate/base_backend.html.twig" %}
+{% block title %}Producte{% endblock %}
+{% block content %}
+    <div class="row">
+        <form class="col s12" action="/producte/save" method="post">
+            <div class="card-panel">
+                <div class="row">
+                    <input type="hidden" name="id" value="{{ producte.id }}">
+                    <div class="input-field col s6">
+                        <input id="nom" name="nom" type="text" class="validate" value="{{ producte.nom }}">
+                        <label for="nom">Nom</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="nom_curt" type="text" name="nom_curt" class="validate" value="{{ producte.nom_curt }}">
+                        <label for="nom_curt">Nom curt</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="PVP" name="PVP" type="text" class="validate" value="{{ producte.PVP }}">
+                        <label for="PVP">PVP</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select id="familia" name="familia">
+                            {% for familia in families %}
+                                {% if familia.id == producte.familia.id %}
+                                    <option value="{{ familia.id }}" selected>{{ familia.nom }}</option>
+                                {% else %}
+                                    <option value="{{ familia.id }}">{{ familia.nom }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <label for="familia">Materialize Select</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea
+                                id="descripcio"
+                                name="descripcio"
+                                class="materialize-textarea"
+                                data-length="255"
+                        >{{ producte.descripcio }}</textarea>
+                        <label for="descripcio">Descripcio</label>
+                    </div>
+                    <input type="submit" class="waves-effect waves-light btn" value="Guardar" />
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "/baseTemplate/base_backend.html.twig" %}
+{% block title %}Productes{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col s12 m8">
+            <div class="card-panel">
+                <table class="bordered">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Nom curt</th>
+                        <th>PVP</th>
+                        <th>Familia</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for producte in productes %}
+                        <tr>
+                            <td>{{ producte.nom }}</td>
+                            <td>{{ producte.nom_curt }}</td>
+                            <td>{{ producte.PVP }}</td>
+                            <td>{{ producte.familia.nom }}</td>
+                            <td>
+                                <a href="/shop/add/{{ producte.id }}"
+                                   class="waves-effect waves-teal btn-flat">
+                                    Afegir al carrito
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

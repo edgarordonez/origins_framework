@@ -82,11 +82,17 @@ abstract class Origins
     {
         $nameColumns = $this->columnsObject($this);
         $valueColumns = $this->valuesObject($this);
+        foreach ($valueColumns as &$valueColumn) {
+            if(is_object($valueColumn)) {
+                $valueColumn = $valueColumn->id;
+            }
+        }
 
         $columns = join(' = ?, ', $nameColumns) . ' = ?';
         $query = 'UPDATE ' . static::$table . ' SET ' . $columns . ' WHERE id = ' . $this->id;
 
         $result = Database::instance()->prepare($query);
+
         $result->execute($valueColumns);
     }
 

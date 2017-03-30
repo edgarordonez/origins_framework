@@ -4,12 +4,12 @@ function cambiar_login() {
     document.querySelector('.cont_form_sign_up').style.opacity = '0'
 
     setTimeout(function () {
-        document.querySelector('.cont_form_login').style.opacity = '1';
+        document.querySelector('.cont_form_login').style.opacity = '1'
     }, 400)
 
     setTimeout(function () {
         document.querySelector('.cont_form_sign_up').style.display = 'none'
-    }, 200);
+    }, 200)
 }
 
 function cambiar_sign_up() {
@@ -19,11 +19,11 @@ function cambiar_sign_up() {
 
     setTimeout(function () {
         document.querySelector('.cont_form_sign_up').style.opacity = '1'
-    }, 100);
+    }, 100)
 
     setTimeout(function () {
         document.querySelector('.cont_form_login').style.display = 'none'
-    }, 400);
+    }, 400)
 }
 
 function ocultar_login_sign_up() {
