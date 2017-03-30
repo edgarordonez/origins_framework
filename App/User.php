@@ -10,9 +10,4 @@ class User extends Origins
     public $name;
     public $email;
     public $password;
-
-    public function __construct($object = null)
-    {
-        $this->initObjectFromPost($object);
-    }
 }

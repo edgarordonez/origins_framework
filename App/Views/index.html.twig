@@ -5,14 +5,7 @@
         <h2>{{ hello }}</h2>
         <h1>{{ origins }}</h1>
         <div class="demo">
-            <button class="login btn_blue">DEMO APP</button>
+            <a href="/shop" class="btn_blue">GO TO EXAMPLE</a>
         </div>
     </div>
-{% endblock %}
-{% block js %}
-    <script>
-        document.querySelector('.login').addEventListener("click", () => {
-            location.replace("/login")
-        })
-    </script>
 {% endblock %}

@@ -47,7 +47,7 @@ html, body {
     color: #FFFFFF;
     font-size: 3.2em;
 }
-.center .demo button {
+.center .demo a {
     font-family: 'Open Sans', sans-serif;
     background-color: transparent;
     border: 1px solid;
@@ -58,6 +58,9 @@ html, body {
     color: #FFFFFF;
     margin-top: 10px;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
 }
 .center .demo > .btn_blue:hover {
     background-color: rgba(66, 143, 190, 0.2);

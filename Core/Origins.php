@@ -6,17 +6,33 @@ abstract class Origins
 {
     public $id;
     protected static $table;
+    protected static $foreignKeys = [];
 
-    public function find($id)
+    public function __construct($object = null)
+    {
+        $this->initObjectFromPost($object);
+        foreach (static::$foreignKeys as $foreignKey) {
+            $this->foreignKeyInit($foreignKey);
+        }
+    }
+
+    private function foreignKeyInit($foreignKey)
+    {
+        $object = $foreignKey['class']::find($this->{$foreignKey['name']});
+        $this->{$foreignKey['name']} = $object;
+    }
+
+    public static function find($id)
     {
         $result = self::where('id', $id);
         return $result[0];
     }
 
-    public function where($field, $value)
+    public static function where($field, $value)
     {
         $objects = null;
-        $results = Database::instance()->prepare('SELECT * FROM ' . static::$table . ' WHERE ' . $field . ' = :value');
+        $query = 'SELECT * FROM ' . static::$table . ' WHERE ' . $field . ' = :value';
+        $results = Database::instance()->prepare($query);
         $results->execute(array(':value' => $value));
 
         if ($results) {
@@ -29,7 +45,7 @@ abstract class Origins
         return $objects;
     }
 
-    public function all()
+    public static function all()
     {
         $objects = null;
         $results = Database::instance()->prepare('SELECT * FROM ' . static::$table);
