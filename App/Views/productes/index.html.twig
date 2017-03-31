@@ -12,47 +12,82 @@
     <div class="row">
         <div class="col s12">
             <div class="card-panel">
-                <table class="bordered">
-                    <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Nom curt</th>
-                        <th>PVP</th>
-                        <th>Familia</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for producte in productes %}
-                        <tr>
-                            <td>{{ producte.nom }}</td>
-                            <td>{{ producte.nom_curt }}</td>
-                            <td>{{ producte.PVP }}</td>
-                            <td>{{ producte.familia.nom }}</td>
-                            <td>
-                                <a
-                                        class="waves-effect waves-light btn"
-                                        href="/producte/edit/{{ producte.id }}"
-                                >
-                                    <i class="material-icons left">edit</i>
-                                    Update
-                                </a>
-                            </td>
-                            <td>
-                                <a
-                                        class="waves-effect waves-light btn"
-                                        href="/producte/remove/{{ producte.id }}"
-                                >
-                                    <i class="material-icons left">remove</i>
-                                    Delete
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select id="familia" name="familia">
+                            <option value="0" selected>Totes</option>
+                            {% for familia in families %}
+                                <option value="{{ familia.id }}">{{ familia.nom }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="familia">Familia</label>
+                    </div>
+                    <div class="col s12">
+                        <table class="bordered">
+                            <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Nom curt</th>
+                                <th>PVP</th>
+                                <th>Familia</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for producte in productes %}
+                                <tr class="product" data-familia="{{ producte.familia.id }}">
+                                    <td>{{ producte.nom }}</td>
+                                    <td>{{ producte.nom_curt }}</td>
+                                    <td>{{ producte.PVP }}</td>
+                                    <td>{{ producte.familia.nom }}</td>
+                                    <td>
+                                        <a
+                                                class="waves-effect waves-light btn"
+                                                href="/producte/edit/{{ producte.id }}"
+                                        >
+                                            <i class="material-icons left">edit</i>
+                                            Update
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a
+                                                class="waves-effect waves-light btn"
+                                                href="/producte/delete/{{ producte.id }}"
+                                        >
+                                            <i class="material-icons left">remove</i>
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block js %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+            let $productes = $('.product')
+            let $familiaSelect = $('#familia')
+            const changeSelect = function ({currentTarget}) {
+                let selectValue = parseInt($(currentTarget).val());
+                if (selectValue === 0) {
+                    $productes.show();
+                    return;
+                }
+                $productes.each(function () {
+                    let $this = $(this);
+                    $this.data('familia') === selectValue ? $this.show() : $this.hide();
+                })
+            }
+            $familiaSelect.change(changeSelect)
+        });
+    </script>
 {% endblock %}

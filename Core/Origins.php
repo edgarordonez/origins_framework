@@ -60,12 +60,27 @@ abstract class Origins
         return $objects;
     }
 
+    public function delete()
+    {
+        $results = Database::instance()->prepare('DELETE FROM ' . static::$table . ' WHERE id=' . $this->id);
+        $results->execute();
+    }
+
     public function save()
     {
+        $nameColumns = $this->columnsObject($this);
+        $valueColumns = $this->valuesObject($this);
+
+        foreach ($valueColumns as &$valueColumn) {
+            if (is_object($valueColumn)) {
+                $valueColumn = $valueColumn->id;
+            }
+        }
+
         if (!empty($this->id)) {
-            $this->updateQuery();
+            $this->updateQuery($nameColumns, $valueColumns);
         } else {
-            $this->insertQuery();
+            $this->insertQuery($nameColumns, $valueColumns);
         }
     }
 
@@ -78,16 +93,8 @@ abstract class Origins
         }
     }
 
-    private function updateQuery()
+    private function updateQuery($nameColumns, $valueColumns)
     {
-        $nameColumns = $this->columnsObject($this);
-        $valueColumns = $this->valuesObject($this);
-        foreach ($valueColumns as &$valueColumn) {
-            if(is_object($valueColumn)) {
-                $valueColumn = $valueColumn->id;
-            }
-        }
-
         $columns = join(' = ?, ', $nameColumns) . ' = ?';
         $query = 'UPDATE ' . static::$table . ' SET ' . $columns . ' WHERE id = ' . $this->id;
 
@@ -96,11 +103,8 @@ abstract class Origins
         $result->execute($valueColumns);
     }
 
-    private function insertQuery()
+    private function insertQuery($nameColumns, $valueColumns)
     {
-        $nameColumns = $this->columnsObject($this);
-        $valueColumns = $this->valuesObject($this);
-
         $params = join(', ', array_fill(0, count($nameColumns), '?'));
         $columns = join(', ', $nameColumns);
         $query = 'INSERT INTO ' . static::$table . ' ( ' . $columns . ' ) VALUES ( ' . $params . ')';

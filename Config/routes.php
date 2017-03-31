@@ -2,13 +2,12 @@
 
 return [
     ['GET', '/', 'HomeController::index'],
-    ['GET', '/shop', 'ShopController::index'],
 
     ['GET', '/producte', 'ProductesController::index'],
     ['GET', '/producte/add', 'ProductesController::add'],
-    ['POST', '/producte/save', 'ProductesController::save'],
     ['GET', '/producte/edit/.+', 'ProductesController::update'],
-    ['GET', '/producte/remove/.+', 'ProductesController::remove'],
+    ['POST', '/producte/save', 'ProductesController::save'],
+    ['GET', '/producte/delete/.+', 'ProductesController::delete'],
 
     /*
     |--------------------------------------------------------------------------

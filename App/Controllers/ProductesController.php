@@ -25,9 +25,11 @@ class ProductesController extends Controller
     {
         $user = $this->getAuthUser();
         $productes = Producte::all();
+        $families = Familia::all();
         $this->display("productes/index.html.twig", [
             "productes" => $productes,
-            "user" => $user
+            "user" => $user,
+            "families" => $families
         ]);
     }
 
@@ -61,7 +63,9 @@ class ProductesController extends Controller
         $this->redirect("/producte");
     }
 
-    public function remove($id) {
+    public function delete($id) {
+        $producte = Producte::find($id);
+        $producte->delete();
         $this->redirect("/producte");
     }
 }
