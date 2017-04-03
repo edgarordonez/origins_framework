@@ -18,7 +18,7 @@ class Database
         $this->connect = new \mysqli($host, $username, $passwd, $dbname);
 
         if ($this->connect->connect_errno) {
-            print 'Error!: ' . $mysqli->connect_errno;
+            print 'Error!: ' . $this->connect->connect_errno;
             die();
         }
         $this->connect->set_charset("utf8");
