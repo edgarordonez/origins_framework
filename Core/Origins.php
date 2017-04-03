@@ -31,9 +31,12 @@ abstract class Origins
     public static function where($field, $value)
     {
         $objects = null;
-        $query = 'SELECT * FROM ' . static::$table . ' WHERE ' . $field . ' = :value';
-        $results = Database::instance()->prepare($query);
-        $results->execute(array(':value' => $value));
+        $query = 'SELECT * FROM ' . static::$table . ' WHERE ' . $field . ' = ?';
+        $statement = Database::instance()->prepare($query);
+        $statement->bind_param('s', $value);
+        $statement->execute();
+        $results = $statement->get_result();
+        $results = $results->fetch_all(MYSQLI_ASSOC);
 
         if ($results) {
             $class = get_called_class();
@@ -48,9 +51,10 @@ abstract class Origins
     public static function all()
     {
         $objects = null;
-        $results = Database::instance()->prepare('SELECT * FROM ' . static::$table);
-        $results->execute();
-
+        $statement = Database::instance()->prepare('SELECT * FROM ' . static::$table);
+        $statement->execute();
+        $results = $statement->get_result();
+        $results = $results->fetch_all(MYSQLI_ASSOC);
         if ($results) {
             $class = get_called_class();
             foreach ($results as $index => $obj) {
@@ -97,10 +101,12 @@ abstract class Origins
     {
         $columns = join(' = ?, ', $nameColumns) . ' = ?';
         $query = 'UPDATE ' . static::$table . ' SET ' . $columns . ' WHERE id = ' . $this->id;
+        echo $query;
+        $statement = Database::instance()->prepare($query);
 
-        $result = Database::instance()->prepare($query);
+        $this->bindParams($statement, $valueColumns);
 
-        $result->execute($valueColumns);
+        $statement->execute();
     }
 
     private function insertQuery($nameColumns, $valueColumns)
@@ -109,9 +115,32 @@ abstract class Origins
         $columns = join(', ', $nameColumns);
         $query = 'INSERT INTO ' . static::$table . ' ( ' . $columns . ' ) VALUES ( ' . $params . ')';
 
-        $result = Database::instance()->prepare($query);
-        $result->execute($valueColumns);
-        $this->id = Database::instance()->lastInsertId();
+        $statement = Database::instance()->prepare($query);
+
+        $this->bindParams($statement, $valueColumns);
+
+        $statement->execute();
+        $this->id = Database::lastInsertId();
+    }
+
+    private function bindParams($statement, $valueColumns)
+    {
+        $a_params = array();
+
+        $param_type = '';
+        $n = count($valueColumns);
+        for ($i = 0; $i < $n; $i++) {
+            $param_type .= 's';
+        }
+
+        $a_params[] = &$param_type;
+
+        for ($i = 0; $i < $n; $i++) {
+            /* with call_user_func_array, array params must be passed by reference */
+            $a_params[] = &$valueColumns[$i];
+        }
+
+        call_user_func_array(array($statement, 'bind_param'), $a_params);
     }
 
     private function columnsObject($object)

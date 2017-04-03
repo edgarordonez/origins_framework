@@ -10,25 +10,20 @@ class Database
     public function __construct()
     {
         $configDb = parse_ini_file(PROJECT_PATH . '/Config/database.ini');
-        $dsn = 'mysql:host=' . $configDb['host'] . ';dbname=' . $configDb['database'] . ';charset=utf8';
-        $user = $configDb['user'];
-        $password = $configDb['password'];
+        $host = $configDb['host'];
+        $username = $configDb['user'];
+        $passwd = $configDb['password'];
+        $dbname = $configDb['database'];
 
-        try {
-            $this->connect = new \PDO(
-                $dsn,
-                $user,
-                $password,
-                array(
-                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-                    \PDO::ATTR_EMULATE_PREPARES => false
-                ));
-            self::$instance = $this->connect;
-        } catch (\PDOException $e) {
-            print 'Error!: ' . $e->getMessage();
+        $this->connect = new \mysqli($host, $username, $passwd, $dbname);
+
+        if ($this->connect->connect_errno) {
+            print 'Error!: ' . $mysqli->connect_errno;
             die();
         }
+        $this->connect->set_charset("utf8");
+
+        self::$instance = $this->connect;
     }
 
     public function prepare($query)
@@ -36,9 +31,9 @@ class Database
         return $this->connect->prepare($query);
     }
 
-    public function lastInsertId()
+    public static function lastInsertId()
     {
-        return $this->connect->lastInsertId();
+        return self::$instance->insert_id;
     }
 
     public static function instance()
